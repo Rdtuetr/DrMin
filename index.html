@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRMin</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            user-select: none;
+        }
+        .navbar, .main-content {
+            display: none;
+        }
+        #welcome-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            z-index: 9999;
+        }
+        #welcome-text {
+            font-size: 4rem;
+            font-family: 'Brush Script MT', cursive;
+            opacity: 0;
+            color: #fff;
+        }
+        #author-text {
+            font-size: 2rem;
+            font-family: 'Arial', sans-serif;
+            position: absolute;
+            opacity: 0;
+            color: #fff;
+        }
+        .navbar {
+            background-color: rgba(18, 18, 18, 0.8);
+        }
+        .navbar-brand, .nav-link {
+            color: #e0e0e0 !important;
+        }
+        .jumbotron {
+            position: relative;
+            overflow: hidden;
+            color: #e0e0e0;
+            padding: 4rem 2rem;
+            background-color: #1e1e1e;
+        }
+        #stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #bb86fc;
+            margin-bottom: 1rem;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(187, 134, 252, 0.1);
+        }
+        .file-list {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .file-item {
+            border-bottom: 1px solid #333;
+            padding: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        .file-item:hover {
+            background-color: #2c2c2c;
+        }
+        .file-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        .btn-outline-primary {
+            color: #bb86fc;
+            border-color: #bb86fc;
+        }
+        .btn-outline-primary:hover {
+            background-color: #bb86fc;
+            color: #121212;
+        }
+        .bg-light {
+            background-color: #1e1e1e !important;
+        }
+        .bg-dark {
+            background-color: #121212 !important;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <div id="welcome-animation">
+        <div id="welcome-text">Hello! Welcome!</div>
+        <div id="author-text">本站作者：Rdtuetr</div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">DRMin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#features">特点</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#file-list">文件列表</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="jumbotron text-center">
+            <canvas id="stars"></canvas>
+            <h1 class="display-4">DRMin</h1>
+            <p class="lead">作者：Rdtuetr</p>
+            <a href="#file-list" class="btn btn-primary btn-lg">查看文件列表</a>
+        </div>
+
+        <div class="container my-5" id="features">
+            <h2 class="text-center mb-5">我们的特点</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-laptop feature-icon"></i>
+                            <h3 class="card-title">现代感十足</h3>
+                            <p class="card-text">智能分类，快速定位下载文件。轻奢风格，安全加密，保障隐私无忧。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user-circle feature-icon"></i>
+                            <h3 class="card-title">个性化界面</h3>
+                            <p class="card-text">智能推荐，轻松发现优质资源。精致图标，清晰布局，让文件下载更美观。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-mobile-alt feature-icon"></i>
+                            <h3 class="card-title">响应式布局</h3>
+                            <p class="card-text">兼容多种设备，随时随地下载文件。匠心独运，细节打磨，打造极致文件下载体验。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-5" id="file-list">
+            <div class="container">
+                <h2 class="text-center mb-5">合集下载</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="file-list">
+                            <div class="file-item d-flex align-items-center">
+                                <i class="fas fa-file-archive file-icon text-danger"></i>
+                                <span>我的世界-Minecraft</span>
+                                <a href="./minecraft.html" class="btn btn-sm btn-outline-primary ms-auto">查看文件列表</a>
+                            </div>
+                            <div class="file-item d-flex align-items-center">
+                                <i class="fas fa-file-archive file-icon text-primary"></i>
+                                <span>荒野乱斗</span>
+                                <a href="https://bs.qq.com" class="btn btn-sm btn-outline-primary ms-auto">查看文件列表</a>
+                            </div>
+                            <div class="file-item d-flex align-items-center">
+                                <i class="fas fa-file-archive file-icon text-success"></i>
+                                <span>黑神话-悟空</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary ms-auto">暂无</a>
+                            </div>
+                            <div class="file-item d-flex align-items-center">
+                                <i class="fas fa-file-archive file-icon text-warning"></i>
+                                <span>敬请期待~~</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-5" id="file-list">
+            <div class="container">
+                <h2 class="text-center mb-5">单个文件列表</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="file-list">
+                            <div class="file-item d-flex align-items-center">
+                                <i class="fas fa-file-archive file-icon text-warning"></i>
+                                <span>ramdon.zip</span>
+                                <a href="https://wwtz.lanzoul.com/iZCgY29xwene" class="btn btn-sm btn-outline-primary ms-auto">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-dark text-white py-4" id="contact">
+            <div class="container text-center">
+                <p>DRMin</p>
+                <p>联系我们: drmin@batwteam.us.kg</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script>
+        (function() {
+            document.addEventListener('DOMContentLoaded', function() {
+                const welcomeText = document.getElementById('welcome-text');
+                const authorText = document.getElementById('author-text');
+                const welcomeAnimation = document.getElementById('welcome-animation');
+                const mainContent = document.querySelector('.main-content');
+                const navbar = document.querySelector('.navbar');
+
+                gsap.to(welcomeText, {duration: 2, opacity: 1, ease: "power2.inOut"});
+
+                gsap.to(welcomeText, {
+                    duration: 1,
+                    opacity: 0,
+                    delay: 3,
+                    onComplete: () => {
+                        gsap.to(authorText, {duration: 1, opacity: 1, ease: "power2.inOut"});
+                    }
+                });
+
+                gsap.to(authorText, {
+                    duration: 1,
+                    opacity: 0,
+                    delay: 6,
+                    onComplete: () => {
+                        gsap.to(welcomeAnimation, {
+                            duration: 1,
+                            rotationY: -90,
+                            ease: "power2.inOut",
+                            onComplete: () => {
+                                welcomeAnimation.style.display = 'none';
+                                mainContent.style.display = 'block';
+                                navbar.style.display = 'block';
+                                gsap.from(mainContent, {duration: 1, opacity: 0, y: 50, ease: "power2.out"});
+                                initStars();
+                            }
+                        });
+                    }
+                });
+            });
+
+            function initStars() {
+                const canvas = document.getElementById('stars');
+                const ctx = canvas.getContext('2d');
+                let width, height;
+
+                function resizeCanvas() {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                const stars = [];
+                const starCount = 200;
+
+                for (let i = 0; i < starCount; i++) {
+                    stars.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        radius: Math.random() * 1.5,
+                        vx: Math.floor(Math.random() * 50) - 25,
+                        vy: Math.floor(Math.random() * 50) - 25
+                    });
+                }
+
+                function draw() {
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.fillStyle = '#FFF';
+                    ctx.beginPath();
+                    for (let i = 0; i < stars.length; i++) {
+                        const s = stars[i];
+                        ctx.moveTo(s.x, s.y);
+                        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+                    }
+                    ctx.fill();
+                    move();
+                }
+
+                function move() {
+                    for (let i = 0; i < stars.length; i++) {
+                        const s = stars[i];
+                        s.x += s.vx / 30;
+                        s.y += s.vy / 30;
+                        if (s.x < 0 || s.x > width) s.vx = -s.vx;
+                        if (s.y < 0 || s.y > height) s.vy = -s.vy;
+                    }
+                }
+
+                function animate() {
+                    draw();
+                    requestAnimationFrame(animate);
+                }
+
+                animate();
+            }
+
+            // 禁用右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+
+            // 禁用F12、Ctrl+Shift+I、Ctrl+Shift+J、Ctrl+U
+            document.onkeydown = function(e) {
+                if (e.keyCode === 123 || 
+                    (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
+                    (e.ctrlKey && e.keyCode === 85)) {
+                    return false;
+                }
+            };
+
+            // 禁用开发者工具
+            setInterval(function() {
+                debugger;
+            }, 100);
+        })();
+    </script>
+</body>
+</html>
+
+
