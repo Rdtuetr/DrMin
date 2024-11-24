@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点击召唤Emoji</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        canvas {
+            border: 1px solid #ccc;
+        }
+        .hint {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="hint">单击鼠标召唤</div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const emojis = ['😊', '😎', '😍', '🤔', '😂', '🥳', '🤩', '🚀', '🌟', '🎉'];
+        const gravity = 0.5;
+        const friction = 0.97;
+        let particles = [];
+
+        function Particle(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 20 + 10;
+            this.speedY = (Math.random() - 0.5) * 10;
+            this.speedX = (Math.random() - 0.5) * 10;
+            this.color = '#000';
+            this.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+        }
+
+        Particle.prototype.update = function () {
+            this.speedY += gravity;
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.speedX *= friction;
+            this.speedY *= friction;
+
+            if (this.y + this.size > canvas.height) {
+                this.y = canvas.height - this.size;
+                this.speedY = -this.speedY * 0.7;
+            }
+
+            if (this.x + this.size > canvas.width || this.x - this.size < 0) {
+                this.speedX = -this.speedX;
+            }
+        };
+
+        Particle.prototype.draw = function () {
+            ctx.font = `${this.size}px Arial`;
+            ctx.fillText(this.emoji, this.x, this.y);
+        };
+
+        function createParticles(x, y) {
+            const particleCount = Math.random() * 10 + 5;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function handleMouseDown(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            createParticles(x, y);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+
+                if (particle.size <= 0.3) {
+                    particles.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('mousedown', handleMouseDown);
+
+        animate();
+    </script>
+</body>
+</html>
